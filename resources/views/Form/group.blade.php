@@ -24,45 +24,56 @@
                         </div>
                     </section>
                 </div>
-                <div class="row part">
-                    <div class="col-lg-4" style="padding: 0">
-                        <div class="card" style="background: transparent;border: 0px;">
-                            <div class="card-body">
-                                <form action="" method="post" novalidate="novalidate">
+                <form id="form_add_group" action="{{ Route('group_add') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card" style="background: transparent;border: 0px;">
+                                <div class="card-body">
                                     <div class="form-group">
-                                        <label for="group" class="control-label mb-1">Group Code</label>
-                                        <input id="group" name="group" type="text" class="form-control"
+                                        <label for="group_code" class="control-label mb-1">Group Code</label>
+                                        <input id="group_code" name="group_code" type="text" class="form-control"
                                             aria-required="true" aria-invalid="false" placeholder="Group Code">
                                     </div>
                                     <div class="form-group">
-                                        <label for="chairman" class="control-label mb-1">Chairman's Name</label>
-                                        <input id="chairman" name="chairman" type="text" class="form-control"
-                                            aria-required="true" aria-invalid="false" placeholder="Full Name">
+                                        <label for="chairman_name" class="control-label mb-1">Chairman's Name</label>
+                                        <input id="chairman_name" name="chairman_name" type="text"
+                                            class="form-control" aria-required="true" aria-invalid="false"
+                                            placeholder="Full Name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="regist" class="control-label mb-1">Registration Date</label>
-                                        <input id="regist" name="regist" type="date" class="form-control">
+                                        <label for="regist_date" class="control-label mb-1">Registration Date</label>
+                                        <input id="regist_date" name="regist_date" type="date" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="phone" class="control-label mb-1">Phone Number</label>
-                                        <input id="phone" name="phone" type="number" class="form-control"
+                                        <label for="phone_number" class="control-label mb-1">Phone Number</label>
+                                        <input id="phone_number" name="phone_number" type="number" class="form-control"
                                             aria-required="true" aria-invalid="false" placeholder="Phone Number">
                                     </div>
                                     <div class="form-group">
-                                        <label for="invoice" class="control-label mb-1">Invoice Number</label>
-                                        <input id="invoice" name="invoice" type="number" class="form-control"
-                                            aria-required="true" aria-invalid="false" placeholder="Invoice Number">
+                                        <label for="invoice_number" class="control-label mb-1">Invoice Number</label>
+                                        <input id="invoice_number" name="invoice_number" type="number"
+                                            class="form-control" aria-required="true" aria-invalid="false"
+                                            placeholder="Invoice Number">
                                     </div>
                                     <div class="form-group">
-                                        <label for="count" class=" form-control-label">Number of Participant</label>
-                                        <select name="count" id="count" class="form-control">
+                                        <label for="participant_number" class=" form-control-label">Number of
+                                            Participant</label>
+                                        <select name="participant_number" id="participant_number" class="form-control">
                                             <option value="0">Please select</option>
-                                            <option value="1">Option #1</option>
-                                            <option value="2">Option #2</option>
-                                            <option value="3">Option #3</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="gender" class="control-label mb-1">Customer :</label>
                                         <div class="form-check-inline form-check"
                                             style="display: flex;justify-content:space-evenly">
@@ -75,68 +86,58 @@
                                                     class="form-check-input">Dini
                                             </label>
                                         </div>
-                                    </div>
-                                </form>
+                                    </div> --}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4"style="padding: 0">
-                        <div class="card" style="background: transparent;border: 0px;">
-                            <div class="card-body">
-                                <form action="" method="post" novalidate="novalidate">
+                        <div class="col-lg-6">
+                            <div class="card" style="background: transparent;border: 0px;">
+                                <div class="card-body">
                                     <div class="form-group">
-                                        <label for="tour" class="control-label mb-1">Type Tour</label>
-                                        <select name="tour" id="tour" class="form-control">
+                                        <label for="type_tour" class="control-label mb-1">Type Tour</label>
+                                        <select name="type_tour" id="type_tour" class="form-control">
                                             <option value="0">Please select</option>
-                                            <option value="1">Option #1</option>
-                                            <option value="2">Option #2</option>
-                                            <option value="3">Option #3</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="start" class="control-label mb-1">Start From</label>
-                                        <select name="start" id="start" class="form-control">
+                                        <label for="start_from" class="control-label mb-1">Start From</label>
+                                        <select name="start_from" id="start_from" class="form-control">
                                             <option value="0">Please select</option>
-                                            <option value="1">Option #1</option>
-                                            <option value="2">Option #2</option>
-                                            <option value="3">Option #3</option>
+                                            <option value="Jakarta">Jakarta</option>
+                                            <option value="Surabaya">Surabaya</option>
+                                            <option value="Yogyakarta">Yogyakarta</option>
                                         </select>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4"style="padding: 0">
-                        <div class="card" style="background: transparent;border: 0px;">
-                            <div class="card-body">
-                                <form action="" method="post" novalidate="novalidate">
                                     <div class="form-group">
-                                        <label for="depart" class="control-label mb-1">Date of Departure</label>
-                                        <input id="depart" name="depart" type="date" class="form-control">
+                                        <label for="date_departure" class="control-label mb-1">Date of
+                                            Departure</label>
+                                        <input id="date_departure" name="date_departure" type="date"
+                                            class="form-control">
                                     </div>
-                                </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container ton">
+                            <div class="row" style="justify-content: flex-end;margin-right: 0;">
+                                <div style="margin-right: 1rem">
+                                    <button type="submit" class="btn btn-lg btn-info btn-block"
+                                        style="background: #5865F2">
+                                        {{ __('Add') }}
+                                    </button>
+                                </div>
+                                <div>
+                                    <button id="cancel-button" type="close" class="btn btn-lg btn-block"
+                                        style="background: #FFFFFF">
+                                        {{ __('Cancel') }}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="container ton">
-                        <div class="row" style="justify-content: flex-end;margin-right: 0;">
-                            <div style="margin-right: 1rem">
-                                <button id="add-button" type="submit" class="btn btn-lg btn-info btn-block"
-                                    style="background: #5865F2">
-                                    <span id="payment-button-amount">Add</span>
-                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
-                                </button>
-                            </div>
-                            <div>
-                                <button id="cancel-button" type="close" class="btn btn-lg btn-block"
-                                    style="background: #FFFFFF">
-                                    <span id="payment-button-amount">Cancel</span>
-                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -178,6 +179,8 @@
     }
 </style>
 </body>
+
+@extends('Layout.footer')
 
 </html>
 <!-- end document-->

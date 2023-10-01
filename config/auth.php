@@ -68,7 +68,22 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Http\Models\User::class,
+        ],
+
+        'participants' => [
+            'driver' => 'eloquent',
+            'model' => App\Http\Models\Participant::class,
+        ],
+
+         'groups' => [
+            'driver' => 'eloquent',
+            'model' => App\Http\Models\Group::class,
+        ],
+
+         'payments' => [
+            'driver' => 'eloquent',
+            'model' => App\Http\Models\Payment::class,
         ],
 
         // 'users' => [

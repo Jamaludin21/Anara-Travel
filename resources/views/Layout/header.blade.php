@@ -8,6 +8,7 @@
     <meta name="description" content="ANARA">
     <meta name="author" content="J_Dev">
     <meta name="keywords" content="ANARA">
+    <meta name="X-CSRF-TOKEN" content="{{ csrf_token() }}">
 
     <!-- Title Page-->
     <title>Anara Explore | @yield('title')</title>
@@ -36,5 +37,4 @@
 
     <!-- Favicon -->
     <link href="{{ asset('favicon.ico') }}" type="image/x-icon" rel="shortcut icon">
-
 </head>

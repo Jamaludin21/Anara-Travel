@@ -4,6 +4,18 @@
 
 @section('title', 'Form Participant')
 
+{{-- @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-error">
+        {{ session('error') }}
+    </div>
+@endif --}}
+
 <!-- PAGE CONTAINER-->
 <div class="page-container">
     @extends('Layout.desktop')
@@ -24,12 +36,15 @@
                         </div>
                     </section>
                 </div>
-                <div class="row part">
-                    <div class="col-lg-4" style="padding: 0">
-                        <div class="card" style="background: transparent;border: 0px;">
-                            <div class="card-body">
-                                <form action="" method="post" novalidate="novalidate">
+                <form id="form_add_participant" action="{{ Route('participant_add') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card" style="background: transparent;border: 0px;">
+                                <div class="card-body">
                                     <div class="form-group">
+                                        <input type="hidden" name="id" id="id" class="form-control">
                                         <label for="name" class="control-label mb-1">Full Name</label>
                                         <input id="name" name="name" type="text" class="form-control"
                                             aria-required="true" aria-invalid="false" placeholder="Full Name">
@@ -39,98 +54,86 @@
                                         <div class="form-check-inline form-check"
                                             style="display: flex;justify-content:space-evenly">
                                             <label for="inline-radio1">
-                                                <input type="radio" id="inline-radio1" name="male" value="option1"
+                                                <input type="radio" id="inline-radio1" name="gender" value="male"
                                                     class="form-check-input">Male
                                             </label>
                                             <label for="inline-radio2">
-                                                <input type="radio" id="inline-radio2" name="female" value="option2"
+                                                <input type="radio" id="inline-radio2" name="gender" value="female"
                                                     class="form-check-input">Female
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="select" class=" form-control-label">Start From</label>
-                                        <select name="start" id="start" class="form-control">
+                                        <select name="start_from" id="start_from" class="form-control">
                                             <option value="0">Please select</option>
-                                            <option value="1">Option #1</option>
-                                            <option value="2">Option #2</option>
-                                            <option value="3">Option #3</option>
+                                            <option value="Jakarta">Jakarta</option>
+                                            <option value="Surabaya">Surabaya</option>
+                                            <option value="Yogyakarta">Yogyakarta</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="select" class=" form-control-label">Group Code</label>
-                                        <select name="group" id="group" class="form-control">
+                                        <select name="group_code" id="group_code" class="form-control">
                                             <option value="0">Please select</option>
-                                            <option value="1">Option #1</option>
-                                            <option value="2">Option #2</option>
-                                            <option value="3">Option #3</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label class=" form-control-label">Upload Passport<i
                                                 class="fas fa-cloud-download"></i></label>
-                                        <input type="file" id="file-input" name="file-input"
-                                            class="form-control-file">
+                                        <input type="file" id="image" name="image" class="form-control-file">
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4"style="padding: 0">
-                        <div class="card" style="background: transparent;border: 0px;">
-                            <div class="card-body">
-                                <form action="" method="post" novalidate="novalidate">
+                        <div class="col-lg-6">
+                            <div class="card" style="background: transparent;border: 0px;">
+                                <div class="card-body">
                                     <div class="form-group">
                                         <label for="passport" class="control-label mb-1">Passport Number</label>
                                         <input id="passport" name="passport" type="number" class="form-control"
                                             aria-required="true" aria-invalid="false" placeholder="Passport Number">
                                     </div>
                                     <div class="form-group">
-                                        <label for="birth" class="control-label mb-1">Date Of Birth</label>
-                                        <input id="birth" name="birth" type="date"
-                                            class="form-control cc-name valid">
+                                        <label for="date_birth" class="control-label mb-1">Date Of Birth</label>
+                                        <input id="date_birth" name="date_birth" type="date" class="form-control">
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4"style="padding: 0">
-                        <div class="card" style="background: transparent;border: 0px;">
-                            <div class="card-body">
-                                <form action="" method="post" novalidate="novalidate">
                                     <div class="form-group">
-                                        <label for="exp" class="control-label mb-1">Expired Passport</label>
-                                        <input id="exp" name="exp" type="date"
-                                            class="form-control cc-name valid">
+                                        <label for="passport_exp" class="control-label mb-1">Expired
+                                            Passport</label>
+                                        <input id="passport_exp" name="passport_exp" type="date"
+                                            class="form-control">
                                     </div>
-                                </form>
+                                </div>
+                            </div>
+                            <div class="container ton">
+                                <div class="row" style="justify-content: flex-end;margin-right: 0;">
+                                    <div style="margin-right: 1rem">
+                                        <button type="submit" class="btn btn-lg btn-info btn-block"
+                                            style="background: #5865F2">
+                                            {{ __('Add') }}
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button id="cancel-button" type="close" class="btn btn-lg btn-block"
+                                            style="background: #FFFFFF">
+                                            {{ __('Cancel') }}
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="container ton">
-                        <div class="row" style="justify-content: flex-end;margin-right: 0;">
-                            <div style="margin-right: 1rem">
-                                <button id="add-button" type="submit" class="btn btn-lg btn-info btn-block"
-                                    style="background: #5865F2">
-                                    <span id="payment-button-amount">Add</span>
-                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
-                                </button>
-                            </div>
-                            <div>
-                                <button id="cancel-button" type="close" class="btn btn-lg btn-block"
-                                    style="background: #FFFFFF">
-                                    <span id="payment-button-amount">Cancel</span>
-                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- END MAIN CONTENT-->
-    <!-- END PAGE CONTAINER-->
+</div>
+<!-- END MAIN CONTENT-->
+<!-- END PAGE CONTAINER-->
 </div>
 
 </div>
@@ -167,6 +170,8 @@
     }
 </style>
 </body>
+
+@extends('Layout.footer')
 
 </html>
 <!-- end document-->

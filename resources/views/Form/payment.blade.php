@@ -28,11 +28,18 @@
                     <div class="col-lg-4" style="padding: 0">
                         <div class="card" style="background: transparent;border: 0px;">
                             <div class="card-body">
-                                <form action="" method="post" novalidate="novalidate">
+                                <form id="form_add_payment" action="{{ Route('payment_add') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
                                     <div class="form-group">
                                         <label for="group" class="control-label mb-1">Group Code</label>
-                                        <input id="group" name="group" type="text" class="form-control"
-                                            aria-required="true" aria-invalid="false" placeholder="Group Code">
+                                        <select name="group" id="group" class="form-control">
+                                            <option value="">Pilih Kode Grup</option>
+                                            @foreach ($group as $items)
+                                                <option value="{{ $items->id }}">
+                                                    {{ $items->group_code }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="chairman" class="control-label mb-1">Chairman's Name</label>
@@ -212,6 +219,8 @@
     }
 </style>
 </body>
+
+@extends('Layout.footer')
 
 </html>
 <!-- end document-->

@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive table-responsive-data2">
-                                <table class="table table-data2">
+                                <table class="table table-data2 data-table">
                                     <thead>
                                         <tr style="text-align: center">
                                             <th>
@@ -73,47 +73,56 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="tr-shadow" style="text-align: center">
-                                            <td>
-                                                <label class="au-checkbox">
-                                                    <input type="checkbox">
-                                                    <span class="au-checkmark"></span>
-                                                </label>
-                                            </td>
-                                            <td>Lori Lynch</td>
-                                            <td>
-                                                <span class="block-email">lori@example.com</span>
-                                            </td>
-                                            <td class="desc">Samsung S8 Black</td>
-                                            <td>2018-09-27 02:12</td>
-                                            <td>
-                                                <span class="status--process">Processed</span>
-                                            </td>
-                                            <td>$679.00</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <div class="table-data-feature">
-                                                    <button class="item" data-toggle="tooltip" data-placement="top"
-                                                        title="Send">
-                                                        <i class="zmdi zmdi-mail-send"></i>
-                                                    </button>
-                                                    <button class="item" data-toggle="tooltip" data-placement="top"
-                                                        title="Edit">
-                                                        <i class="zmdi zmdi-edit"></i>
-                                                    </button>
-                                                    <button class="item" data-toggle="tooltip" data-placement="top"
-                                                        title="Delete">
-                                                        <i class="zmdi zmdi-delete"></i>
-                                                    </button>
-                                                    <button class="item" data-toggle="tooltip" data-placement="top"
-                                                        title="More">
-                                                        <i class="zmdi zmdi-more"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="spacer"></tr>
+                                        @forelse ($participant as $customer)
+                                            <tr class="tr-shadow" style="text-align: center">
+                                                <td>
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td>{{ $customer->name }}</td>
+                                                <td>
+                                                    <span class="block-email">{{ $customer->group_code }}</span>
+                                                </td>
+                                                <td class="desc">{{ $customer->gender }}</td>
+                                                <td>{{ $customer->start_from }}</td>
+                                                <td>
+                                                    <span class="status--process">{{ $customer->date_birth }}</span>
+                                                </td>
+                                                <td>{{ $customer->passport }}</td>
+                                                <td>{{ $customer->passport_exp }}</td>
+                                                <td><img src="{{ Storage::url('') . $customer->image }}"
+                                                        class="rounded"></td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <button class="item edit" data-toggle="modal"
+                                                            data-target="#editModal" data-placement="top" title="Edit"
+                                                            data="{{ $customer->id }}"><i class="zmdi zmdi-edit"></i>
+                                                        </button>
+                                                        {{-- <button type="submit" class="item delete" data-toggle="tooltip"
+                                                            data-placement="top" title="Delete"
+                                                            data="{{ $customer->id }}"><i class="zmdi zmdi-delete"></i>
+                                                        </button> --}}
+                                                        <form action="{{ route('participant_delete', $customer->id) }}"
+                                                            method="POST"> @csrf
+                                                            <input type="hidden" name="id"
+                                                                value="{{ $customer->id }}">
+                                                            <button type="submit" class="item delete"
+                                                                data-toggle="tooltip" data-placement="top"
+                                                                title="Delete" data="{{ $customer->id }}"><i
+                                                                    class="zmdi zmdi-delete"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="spacer"></tr>
+                                        @empty
+                                            <div class="alert alert-danger">
+                                                {{ __('Data Belum Tersedia') }}
+                                            </div>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -125,6 +134,110 @@
         </div>
     </div>
     <!-- END MAIN CONTENT-->
+    <!-- modal edit -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Ubah Data Partisipan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form action="{{ route('participant_edit', $customer->id) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <input type="hidden" name="id" id="id" class="form-control">
+                                    <label for="name" class="control-label mb-1">Full
+                                        Name</label>
+                                    <input id="name" name="name" type="text" class="form-control"
+                                        aria-required="true" aria-invalid="false" placeholder="Full Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender" class="control-label mb-1">Gender
+                                        :</label>
+                                    <div class="form-check-inline form-check"
+                                        style="display: flex;justify-content:space-evenly">
+                                        <label for="inline-radio1">
+                                            <input type="radio" id="inline-radio1" name="gender" value="male"
+                                                class="form-check-input">Male
+                                        </label>
+                                        <label for="inline-radio2">
+                                            <input type="radio" id="inline-radio2" name="gender" value="female"
+                                                class="form-check-input">Female
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="select" class=" form-control-label">Start
+                                        From</label>
+                                    <select name="start_from" id="start_from" class="form-control">
+                                        <option value="0">Please select</option>
+                                        <option value="Jakarta">Jakarta</option>
+                                        <option value="Surabaya">Surabaya</option>
+                                        <option value="Yogyakarta">Yogyakarta</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="select" class=" form-control-label">Group
+                                        Code</label>
+                                    <select name="group_code" id="group_code" class="form-control">
+                                        <option value="0">Please select</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" form-control-label">Upload Passport<i
+                                            class="fas fa-cloud-download"></i></label>
+                                    <input type="file" id="image" name="image" class="form-control-file">
+                                </div>
+                                <div class="form-group">
+                                    <label for="passport" class="control-label mb-1">Passport
+                                        Number</label>
+                                    <input id="passport" name="passport" type="number" class="form-control"
+                                        aria-required="true" aria-invalid="false" placeholder="Passport Number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="date_birth" class="control-label mb-1">Date Of
+                                        Birth</label>
+                                    <input id="date_birth" name="date_birth" type="date" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="passport_exp" class="control-label mb-1">Expired
+                                        Passport</label>
+                                    <input id="passport_exp" name="passport_exp" type="date"
+                                        class="form-control">
+                                </div>
+                                <div class="container ton">
+                                    <div class="row" style="justify-content: flex-end;margin-right: 0;">
+                                        <div style="margin-right: 1rem">
+                                            <button type="submit" class="btn btn-lg btn-info btn-block"
+                                                style="background: #5865F2">
+                                                {{ __('Edit') }}
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button id="cancel-button" type="close" class="btn btn-lg btn-block"
+                                                style="background: #FFFFFF">
+                                                {{ __('Cancel') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- END PAGE CONTAINER-->
 </div>
 
@@ -161,7 +274,10 @@
         }
     }
 </style>
+
 </body>
+
+@extends('Layout.footer')
 
 </html>
 <!-- end document-->
